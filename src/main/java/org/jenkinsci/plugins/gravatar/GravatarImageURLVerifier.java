@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
+import hudson.ProxyConfiguration;
 
 /**
  * Class that verifies that a Gravatar exists for an email.
@@ -53,7 +54,7 @@ class GravatarImageURLVerifier {
         boolean gravtarExistsForEmail = false;
         try {
             URL url = new URL(imageURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) ProxyConfiguration.open(url);
             connection.setConnectTimeout(5*1000);
             connection.setReadTimeout(5*1000);
             connection.setRequestMethod("HEAD");
