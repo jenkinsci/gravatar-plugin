@@ -59,7 +59,8 @@ class GravatarImageURLVerifier {
             connection.setReadTimeout(5*1000);
             connection.setRequestMethod("HEAD");
             connection.connect();
-            gravtarExistsForEmail = (connection.getResponseCode() == HttpURLConnection.HTTP_OK);
+            int gravtarResponseCode = connection.getResponseCode();
+            gravtarExistsForEmail = (gravtarResponseCode == HttpURLConnection.HTTP_OK) || (gravtarResponseCode == HttpURLConnection.HTTP_NOT_MODIFIED);
             connection.disconnect();
         } catch (MalformedURLException e) {
             LOGGER.warning("Gravatar URL is malformed, " + imageURL);
