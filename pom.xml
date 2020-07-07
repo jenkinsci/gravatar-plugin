@@ -13,7 +13,7 @@
   
   <name>Jenkins Gravatar plugin</name>
   <description>This plugin shows Gravatar avatar images for Jenkins users.</description>
-  <url>https://plugins.jenkins.io/gravatar</url>
+  <url>https://github.com/jenkinsci/gravatar-plugin</url>
   
   <licenses>
     <license>
