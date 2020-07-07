@@ -1,4 +1,4 @@
-# Jenkins Gravatar Plugin
+# Gravatar Plugin
 
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/gravatar)](https://plugins.jenkins.io/gravatar)
 [![Changelog](https://img.shields.io/github/v/tag/jenkinsci/gravatar-plugin?label=changelog)](https://github.com/jenkinsci/gravatar-plugin/blob/master/CHANGELOG.md)
