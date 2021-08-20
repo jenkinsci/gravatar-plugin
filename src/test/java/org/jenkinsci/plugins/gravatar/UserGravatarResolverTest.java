@@ -23,28 +23,27 @@
  */
 package org.jenkinsci.plugins.gravatar;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.*;
-
 import hudson.model.User;
 import hudson.tasks.Mailer;
-import org.jenkinsci.plugins.gravatar.boundary.GravatarImageURLVerifier;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserGravatarResolverTest {
-    
+
 	@Mock
 	User user;
 
