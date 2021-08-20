@@ -5,41 +5,41 @@ import com.google.common.base.Optional;
 import com.google.common.testing.EqualsTester;
 import hudson.model.User;
 import hudson.tasks.Mailer;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.Collections;
-
-import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(User.class)
+@PowerMockIgnore({"jdk.xml.internal.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class GravatarUserTest {
 
 	public static final String EMAIL = "myid@mail.com";
 	public static final String USER_ID = "myid";
-	@Mock
+
 	User user;
 
-	@Mock
 	Mailer.UserProperty mailProperty;
 
 	@Before
 	public void setUp() throws Exception {
+		user = PowerMockito.mock(User.class);
 		when(user.getId()).thenReturn(USER_ID);
+
+		mailProperty = PowerMockito.mock(Mailer.UserProperty.class);
 		when(mailProperty.getAddress()).thenReturn(EMAIL);
+
 		PowerMockito.mockStatic(User.class);
 		when(User.get(eq(USER_ID))).thenReturn(user);
 	}
@@ -87,7 +87,7 @@ public class GravatarUserTest {
 		grUser.emailAddress();
 		grUser.emailAddress();
 		grUser.emailAddress();
-		verify(user, times(1)).getProperty(Mailer.UserProperty.class);
+		Mockito.verify(user, Mockito.times(1)).getProperty(Mailer.UserProperty.class);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class GravatarUserTest {
 	}
 
 	private GravatarUser user(String userId) {
-		User user = mock(User.class);
+		User user = PowerMockito.mock(User.class);
 		when(user.getId()).thenReturn(userId);
 		return GravatarUser.gravatarUser(user);
 	}
