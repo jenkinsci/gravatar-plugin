@@ -26,36 +26,36 @@ public class GravatarUrlCreatorTest {
 	GravatarUrlCreator creator;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		when(user.emailAddress()).thenReturn(Optional.of("eramfelt@gmail.com"));
 		creator = spy(GravatarUrlCreator.of(user));
 		doReturn(new GravatarFactory().testGravatar()).when(creator).gravatar();
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void itDoesNotAcceptNullUsers() throws Exception {
+	public void itDoesNotAcceptNullUsers() {
 		GravatarUrlCreator.of(null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itDoesNotAcceptUsersWithoutEMailAddresses() throws Exception {
+	public void itDoesNotAcceptUsersWithoutEMailAddresses() {
 		when(user.emailAddress()).thenReturn(Optional.<String>absent());
 		GravatarUrlCreator.of(user);
 	}
 
 	@Test
-	public void itAcceptsUsersWithEmailAddress() throws Exception {
+	public void itAcceptsUsersWithEmailAddress() {
 		assertThat(GravatarUrlCreator.of(user), is(not(nullValue())));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itDoesNotAcceptNegativeSizes() throws Exception {
+	public void itDoesNotAcceptNegativeSizes() {
 		GravatarUrlCreator creator = creator();
 		creator.buildUrlForSize(-2);
 	}
 
 	@Test
-	public void itBuildsAUrlForPositiveSizes() throws Exception {
+	public void itBuildsAUrlForPositiveSizes() {
 		final String url = creator().buildUrlForSize(48);
 		assertThat(url, containsString("48"));
 		assertThat(url, containsString("gravatar.com"));

@@ -90,17 +90,17 @@ public class GravatarImageResolutionLoadingCacheTest {
 	}
 
 	@Test
-	public void itShouldNotHaveAvatarCreatorForUncachedUser() throws Exception {
+	public void itShouldNotHaveAvatarCreatorForUncachedUser() {
 		assertThat(cache.hasGravatarCreator(uncachedUser), is(false));
 	}
 
 	@Test
-	public void itShouldNotHaveGravatarCreatorForUnknownUser() throws Exception {
+	public void itShouldNotHaveGravatarCreatorForUnknownUser() {
 		assertThat(cache.hasGravatarCreator(cachedUnknownUser), is(false));
 	}
 
 	@Test
-	public void itShouldHaveGravatarCreatorForCachedKnownUser() throws Exception {
+	public void itShouldHaveGravatarCreatorForCachedKnownUser() {
 		assertThat(cache.hasGravatarCreator(cachedKnownUser), is(true));
 	}
 

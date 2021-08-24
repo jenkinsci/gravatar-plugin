@@ -43,7 +43,7 @@ public class GravatarImageURLVerifierTest {
 	private GravatarImageURLVerifier urlVerifier = new GravatarImageURLVerifier();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		doReturn(new GravatarFactory().testGravatar()).when(urlVerifier).gravatar();
 	}
 
@@ -57,7 +57,7 @@ public class GravatarImageURLVerifierTest {
     }
 
 	@Test(expected = NullPointerException.class)
-	public void doesNotAllowNullEMails() throws Exception {
+	public void doesNotAllowNullEMails() {
 		urlVerifier.verify(null);
 	}
 }

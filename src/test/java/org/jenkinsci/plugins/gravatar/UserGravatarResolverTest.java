@@ -72,20 +72,20 @@ public class UserGravatarResolverTest {
 	}
 
 	@Test
-	public void resolverShouldNotFindAnythingForAnUnknownUser() throws Exception {
+	public void resolverShouldNotFindAnythingForAnUnknownUser() {
 		makeUserUnknown();
 		assertThat(resolver.findAvatarFor(user, 48, 48), is(nullValue()));
 	}
 
 
 	@Test
-	public void resolverShouldNotLookupAnUnknowUser() throws Exception {
+	public void resolverShouldNotLookupAnUnknowUser() {
 		makeUserUnknown();
 		verify(resolver, never()).urlCreatorFor(any(User.class));
 	}
 
 	@Test
-	public void aKnownUserIsResolved() throws Exception {
+	public void aKnownUserIsResolved() {
 		makeUserKnown();
 		assertThat(resolver.findAvatarFor(user, 48, 48), is(not(nullValue())));
 		verify(resolver, atLeastOnce()).urlCreatorFor(same(user));

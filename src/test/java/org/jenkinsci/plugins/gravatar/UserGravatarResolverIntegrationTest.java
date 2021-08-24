@@ -62,7 +62,7 @@ public class UserGravatarResolverIntegrationTest {
     private JenkinsRule.WebClient wc;
 
 	@Before
-    public void setUp() throws Exception {
+    public void setUp() {
 		wc = j.createWebClient();
     }
 

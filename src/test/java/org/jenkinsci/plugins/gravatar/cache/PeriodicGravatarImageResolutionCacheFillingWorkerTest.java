@@ -35,7 +35,7 @@ public class PeriodicGravatarImageResolutionCacheFillingWorkerTest {
 	TaskListener taskListener;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		for (int i = 0; i < 100; i++) {
 			User user = mock(User.class);
 			users.add(user);
