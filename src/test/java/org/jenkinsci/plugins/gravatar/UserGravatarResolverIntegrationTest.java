@@ -40,7 +40,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -146,10 +145,8 @@ public class UserGravatarResolverIntegrationTest {
 		if(statusById != null) {
 			return statusById;
 		}
-		final ListIterator<DomElement> tablesOnPage = htmlPage.getElementsByTagName("table").listIterator();
-		while (tablesOnPage.hasNext()) {
-			DomElement next = tablesOnPage.next();
-			if("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
+		for (DomElement next : htmlPage.getElementsByTagName("table")) {
+			if ("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
 				return next;
 			}
 		}
