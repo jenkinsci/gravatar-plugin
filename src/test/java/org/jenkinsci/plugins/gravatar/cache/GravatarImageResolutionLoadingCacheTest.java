@@ -57,7 +57,7 @@ public class GravatarImageResolutionLoadingCacheTest {
 		when(uncachedUser.getId()).thenReturn("ABD");
 		cache = spy(new GravatarImageResolutionLoadingCache(innerCache));
 
-		doReturn(new ConcurrentHashMap<GravatarUser, Optional<GravatarUrlCreator>>(mapOfCachedUsers())).when(innerCache).asMap();
+		doReturn(new ConcurrentHashMap<>(mapOfCachedUsers())).when(innerCache).asMap();
 
 		doReturn(Optional.absent()).when(innerCache).getUnchecked(any(GravatarUser.class));
 		doReturn(Optional.absent()).when(innerCache).get(any(GravatarUser.class));
