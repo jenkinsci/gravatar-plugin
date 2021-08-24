@@ -39,7 +39,7 @@ public class GravatarUrlCreatorTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void itDoesNotAcceptUsersWithoutEMailAddresses() {
-		when(user.emailAddress()).thenReturn(Optional.<String>absent());
+		when(user.emailAddress()).thenReturn(Optional.absent());
 		GravatarUrlCreator.of(user);
 	}
 

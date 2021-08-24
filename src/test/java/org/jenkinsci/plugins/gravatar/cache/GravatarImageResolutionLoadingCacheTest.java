@@ -68,7 +68,7 @@ public class GravatarImageResolutionLoadingCacheTest {
 	private ImmutableMap<GravatarUser, Optional<GravatarUrlCreator>> mapOfCachedUsers() {
 		GravatarUser cachedGravatarUser = GravatarUser.gravatarUser(cachedKnownUser);
 		GravatarUser cachedUnknownGravatarUser = GravatarUser.gravatarUser(cachedUnknownUser);
-		return ImmutableMap.of(cachedGravatarUser, Optional.of(cachedKnownCreator), cachedUnknownGravatarUser, Optional.<GravatarUrlCreator>absent());
+		return ImmutableMap.of(cachedGravatarUser, Optional.of(cachedKnownCreator), cachedUnknownGravatarUser, Optional.absent());
 	}
 
 	@Test
