@@ -23,6 +23,7 @@ public class GravatarFactory {
 	}
 
 	private boolean useHttps() {
-		return Jenkins.getInstanceOrNull().isRootUrlSecure();
+		final Jenkins jenkins = Jenkins.getInstanceOrNull();
+		return jenkins != null && jenkins.isRootUrlSecure();
 	}
 }
