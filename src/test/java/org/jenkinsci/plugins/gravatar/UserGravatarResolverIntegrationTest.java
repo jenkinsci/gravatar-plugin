@@ -23,18 +23,17 @@
  */
 package org.jenkinsci.plugins.gravatar;
 
+import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.model.User;
 import hudson.tasks.Mailer;
-import jenkins.model.Jenkins;
 import org.hamcrest.Matcher;
 import org.jenkinsci.plugins.gravatar.cache.GravatarImageResolutionCacheInstance;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.jvnet.hudson.test.HudsonTestCase;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.xml.sax.SAXException;
 
@@ -46,7 +45,7 @@ import java.util.Set;
 import java.util.concurrent.*;
 
 import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class UserGravatarResolverIntegrationTest {
@@ -117,7 +116,7 @@ public class UserGravatarResolverIntegrationTest {
 	}
 
 	private void assertThatUserCount(HtmlPage page, Matcher<Integer> integerMatcher) {
-		List<HtmlAnchor> userLinks = page.selectNodes("//a[contains(@href,'/user/')]");
+		List<HtmlAnchor> userLinks = page.getByXPath("//a[contains(@href,'/user/')]");
 		Set<String> targets = newHashSetWithExpectedSize(userLinks.size());
 		for (HtmlAnchor userLink : userLinks) {
 			targets.add(userLink.getHrefAttribute());
@@ -127,21 +126,23 @@ public class UserGravatarResolverIntegrationTest {
 
 	private HtmlPage goAndWaitForLoadOfPeople() throws InterruptedException, IOException, SAXException {
 		HtmlPage htmlPage = wc.goTo("asynchPeople");
-		while(getStatus(htmlPage).isDisplayed()) {
+		DomElement status = getStatus(htmlPage);
+		while(status != null && status.isDisplayed()) {
 			//the asynch part has not yet finished, so we wait.
 			Thread.sleep(500);
+			status = getStatus(htmlPage);
 		}
 		return htmlPage;
 	}
 
-	private HtmlElement getStatus(HtmlPage htmlPage) {
-		final HtmlElement statusById = htmlPage.getElementById("status");
+	private DomElement getStatus(HtmlPage htmlPage) {
+		final DomElement statusById = htmlPage.getElementById("status");
 		if(statusById != null) {
 			return statusById;
 		}
-		final ListIterator<HtmlElement> tablesOnPage = htmlPage.getElementsByTagName("table").listIterator();
+		final ListIterator<DomElement> tablesOnPage = htmlPage.getElementsByTagName("table").listIterator();
 		while (tablesOnPage.hasNext()) {
-			HtmlElement next = tablesOnPage.next();
+			DomElement next = tablesOnPage.next();
 			if("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
 				return next;
 			}

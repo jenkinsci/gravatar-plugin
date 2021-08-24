@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 import static org.jenkinsci.plugins.gravatar.model.GravatarUser.gravatarUser;
 
-class GravatarImageResolutionLoadingCache {
+public class GravatarImageResolutionLoadingCache {
 
 	private static final Logger LOG = Logger.getLogger(GravatarImageResolutionLoadingCache.class.getName());
 

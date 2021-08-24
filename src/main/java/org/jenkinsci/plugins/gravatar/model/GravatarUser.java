@@ -46,9 +46,7 @@ public class GravatarUser {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this)
-				.add("userId",this.userId)
-				.toString();
+		return String.format("GravatarUser{userId='%s'}", userId);
 	}
 
 	//--- for using as a cacheKey

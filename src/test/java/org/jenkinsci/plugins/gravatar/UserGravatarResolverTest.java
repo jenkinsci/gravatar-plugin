@@ -1,18 +1,18 @@
 /*
  * The MIT License
- * 
+ *
  * Copyright (c) 2011, Erik Ramfelt
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,42 +23,50 @@
  */
 package org.jenkinsci.plugins.gravatar;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.*;
-
 import hudson.model.User;
 import hudson.tasks.Mailer;
-import org.jenkinsci.plugins.gravatar.boundary.GravatarImageURLVerifier;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(User.class)
+@PowerMockIgnore({"jdk.xml.internal.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class UserGravatarResolverTest {
-    
-	@Mock
+
 	User user;
 
-	@Mock
 	Mailer.UserProperty mailPropertyOfUser;
 
-	@Mock
 	GravatarUrlCreator urlCreator;
 
-	@Spy
-	UserGravatarResolver resolver = new UserGravatarResolver();
+	UserGravatarResolver resolver;
 
-    @Before
-    public void setUp() {
+	@Before
+	public void setUp() {
+		user = PowerMockito.mock(User.class);
+		mailPropertyOfUser = PowerMockito.mock(Mailer.UserProperty.class);
+		urlCreator = PowerMockito.mock(GravatarUrlCreator.class);
+		resolver = PowerMockito.spy(new UserGravatarResolver());
+
 		when(user.getId()).thenReturn("user");
 		when(user.getProperty(same(Mailer.UserProperty.class))).thenReturn(mailPropertyOfUser);
 	}
