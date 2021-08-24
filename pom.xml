@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>gravatar</artifactId>
-  <version>2.2-SNAPSHOT</version>
+  <version>2.2</version>
   <packaging>hpi</packaging>
   
   <name>Jenkins Gravatar plugin</name>
@@ -50,7 +50,7 @@
     <connection>scm:git:ssh://github.com/jenkinsci/gravatar-plugin.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/jenkinsci/gravatar-plugin.git</developerConnection>
     <url>http://github.com/jenkinsci/gravatar-plugin</url>
-    <tag>HEAD</tag>
+    <tag>gravatar-2.2</tag>
   </scm>
   
   <issueManagement>
