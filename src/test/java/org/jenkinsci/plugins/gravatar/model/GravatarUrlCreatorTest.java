@@ -6,10 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -23,36 +26,36 @@ public class GravatarUrlCreatorTest {
 	GravatarUrlCreator creator;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		when(user.emailAddress()).thenReturn(Optional.of("eramfelt@gmail.com"));
 		creator = spy(GravatarUrlCreator.of(user));
 		doReturn(new GravatarFactory().testGravatar()).when(creator).gravatar();
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void itDoesNotAcceptNullUsers() throws Exception {
+	public void itDoesNotAcceptNullUsers() {
 		GravatarUrlCreator.of(null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itDoesNotAcceptUsersWithoutEMailAddresses() throws Exception {
-		when(user.emailAddress()).thenReturn(Optional.<String>absent());
+	public void itDoesNotAcceptUsersWithoutEMailAddresses() {
+		when(user.emailAddress()).thenReturn(Optional.absent());
 		GravatarUrlCreator.of(user);
 	}
 
 	@Test
-	public void itAcceptsUsersWithEmailAddress() throws Exception {
+	public void itAcceptsUsersWithEmailAddress() {
 		assertThat(GravatarUrlCreator.of(user), is(not(nullValue())));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void itDoesNotAcceptNegativeSizes() throws Exception {
+	public void itDoesNotAcceptNegativeSizes() {
 		GravatarUrlCreator creator = creator();
 		creator.buildUrlForSize(-2);
 	}
 
 	@Test
-	public void itBuildsAUrlForPositiveSizes() throws Exception {
+	public void itBuildsAUrlForPositiveSizes() {
 		final String url = creator().buildUrlForSize(48);
 		assertThat(url, containsString("48"));
 		assertThat(url, containsString("gravatar.com"));

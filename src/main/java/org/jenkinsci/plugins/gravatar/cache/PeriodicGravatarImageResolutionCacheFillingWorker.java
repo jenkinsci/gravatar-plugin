@@ -33,8 +33,6 @@ import hudson.model.AsyncPeriodicWork;
 import hudson.model.PeriodicWork;
 import hudson.model.TaskListener;
 import hudson.model.User;
-import org.jenkinsci.plugins.gravatar.UserGravatarResolver;
-import org.jenkinsci.plugins.gravatar.cache.GravatarImageResolutionCache;
 
 /**
  * Async periodic worker that updates the cached map in {@link org.jenkinsci.plugins.gravatar.UserGravatarResolver}

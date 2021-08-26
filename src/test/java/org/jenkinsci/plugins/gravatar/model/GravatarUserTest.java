@@ -16,8 +16,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.eq;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
@@ -33,7 +33,7 @@ public class GravatarUserTest {
 	Mailer.UserProperty mailProperty;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		user = PowerMockito.mock(User.class);
 		when(user.getId()).thenReturn(USER_ID);
 
@@ -45,23 +45,23 @@ public class GravatarUserTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void itShouldNotAllowNullUsers() throws Exception {
+	public void itShouldNotAllowNullUsers() {
 		GravatarUser.gravatarUser(null);
 	}
 
 	@Test
-	public void itShouldAllowNonNullUsers() throws Exception {
+	public void itShouldAllowNonNullUsers() {
 		GravatarUser.gravatarUser(user);
 	}
 
 	@Test
-	public void itShouldNotGiveAnEMailAddressIfNoneAvailable() throws Exception {
+	public void itShouldNotGiveAnEMailAddressIfNoneAvailable() {
 		GravatarUser grUser = GravatarUser.gravatarUser(user);
 		assertThat(grUser.emailAddress(), equalTo(Optional.<String>absent()));
 	}
 
 	@Test
-	public void itShouldReturnEMailAddressReturnedByProperty() throws Exception {
+	public void itShouldReturnEMailAddressReturnedByProperty() {
 		when(user.getProperty(Mailer.UserProperty.class)).thenReturn(mailProperty);
 
 		GravatarUser grUser = GravatarUser.gravatarUser(user);
@@ -72,7 +72,7 @@ public class GravatarUserTest {
 	}
 
 	@Test
-	public void anEmptyEmailAddressIsTreatedAsNull() throws Exception {
+	public void anEmptyEmailAddressIsTreatedAsNull() {
 		when(mailProperty.getAddress()).thenReturn("");
 		when(user.getProperty(Mailer.UserProperty.class)).thenReturn(mailProperty);
 
@@ -82,7 +82,7 @@ public class GravatarUserTest {
 	}
 
 	@Test
-	public void itShouldOnlyCallEMailPropertyOnce() throws Exception {
+	public void itShouldOnlyCallEMailPropertyOnce() {
 		GravatarUser grUser = GravatarUser.gravatarUser(user);
 		grUser.emailAddress();
 		grUser.emailAddress();
@@ -91,7 +91,7 @@ public class GravatarUserTest {
 	}
 
 	@Test
-	public void itShouldBehaveCorrectlyWithEquals() throws Exception {
+	public void itShouldBehaveCorrectlyWithEquals() {
 		GravatarUser user1 = user("userid1");
 		GravatarUser user1_2 = user("userid1");
 		GravatarUser user1_3 = user("userid1");

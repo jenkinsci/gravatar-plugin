@@ -40,13 +40,18 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.startsWith;
 
 public class UserGravatarResolverIntegrationTest {
 
@@ -56,7 +61,7 @@ public class UserGravatarResolverIntegrationTest {
     private JenkinsRule.WebClient wc;
 
 	@Before
-    public void setUp() throws Exception {
+    public void setUp() {
 		wc = j.createWebClient();
     }
 
@@ -140,10 +145,8 @@ public class UserGravatarResolverIntegrationTest {
 		if(statusById != null) {
 			return statusById;
 		}
-		final ListIterator<DomElement> tablesOnPage = htmlPage.getElementsByTagName("table").listIterator();
-		while (tablesOnPage.hasNext()) {
-			DomElement next = tablesOnPage.next();
-			if("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
+		for (DomElement next : htmlPage.getElementsByTagName("table")) {
+			if ("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
 				return next;
 			}
 		}

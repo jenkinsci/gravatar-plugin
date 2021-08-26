@@ -1,9 +1,7 @@
 package org.jenkinsci.plugins.gravatar.model;
 
 import com.google.common.annotations.VisibleForTesting;
-import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
-import jenkins.model.Jenkins;
 import org.jenkinsci.plugins.gravatar.factory.GravatarFactory;
 
 import static com.google.common.base.Preconditions.checkArgument;

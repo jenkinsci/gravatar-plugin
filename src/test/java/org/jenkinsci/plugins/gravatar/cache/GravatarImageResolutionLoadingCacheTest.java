@@ -10,16 +10,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GravatarImageResolutionLoadingCacheTest {
@@ -50,7 +57,7 @@ public class GravatarImageResolutionLoadingCacheTest {
 		when(uncachedUser.getId()).thenReturn("ABD");
 		cache = spy(new GravatarImageResolutionLoadingCache(innerCache));
 
-		doReturn(new ConcurrentHashMap<GravatarUser, Optional<GravatarUrlCreator>>(mapOfCachedUsers())).when(innerCache).asMap();
+		doReturn(new ConcurrentHashMap<>(mapOfCachedUsers())).when(innerCache).asMap();
 
 		doReturn(Optional.absent()).when(innerCache).getUnchecked(any(GravatarUser.class));
 		doReturn(Optional.absent()).when(innerCache).get(any(GravatarUser.class));
@@ -61,7 +68,7 @@ public class GravatarImageResolutionLoadingCacheTest {
 	private ImmutableMap<GravatarUser, Optional<GravatarUrlCreator>> mapOfCachedUsers() {
 		GravatarUser cachedGravatarUser = GravatarUser.gravatarUser(cachedKnownUser);
 		GravatarUser cachedUnknownGravatarUser = GravatarUser.gravatarUser(cachedUnknownUser);
-		return ImmutableMap.of(cachedGravatarUser, Optional.of(cachedKnownCreator), cachedUnknownGravatarUser, Optional.<GravatarUrlCreator>absent());
+		return ImmutableMap.of(cachedGravatarUser, Optional.of(cachedKnownCreator), cachedUnknownGravatarUser, Optional.absent());
 	}
 
 	@Test
@@ -83,17 +90,17 @@ public class GravatarImageResolutionLoadingCacheTest {
 	}
 
 	@Test
-	public void itShouldNotHaveAvatarCreatorForUncachedUser() throws Exception {
+	public void itShouldNotHaveAvatarCreatorForUncachedUser() {
 		assertThat(cache.hasGravatarCreator(uncachedUser), is(false));
 	}
 
 	@Test
-	public void itShouldNotHaveGravatarCreatorForUnknownUser() throws Exception {
+	public void itShouldNotHaveGravatarCreatorForUnknownUser() {
 		assertThat(cache.hasGravatarCreator(cachedUnknownUser), is(false));
 	}
 
 	@Test
-	public void itShouldHaveGravatarCreatorForCachedKnownUser() throws Exception {
+	public void itShouldHaveGravatarCreatorForCachedKnownUser() {
 		assertThat(cache.hasGravatarCreator(cachedKnownUser), is(true));
 	}
 

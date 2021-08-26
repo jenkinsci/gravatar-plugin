@@ -8,11 +8,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.same;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PeriodicGravatarImageResolutionCacheFillingWorkerTest {
@@ -29,7 +35,7 @@ public class PeriodicGravatarImageResolutionCacheFillingWorkerTest {
 	TaskListener taskListener;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		for (int i = 0; i < 100; i++) {
 			User user = mock(User.class);
 			users.add(user);
