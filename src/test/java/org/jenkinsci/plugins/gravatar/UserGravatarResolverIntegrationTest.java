@@ -23,10 +23,10 @@
  */
 package org.jenkinsci.plugins.gravatar;
 
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.htmlunit.html.DomElement;
+import org.htmlunit.html.HtmlAnchor;
+import org.htmlunit.html.HtmlElement;
+import org.htmlunit.html.HtmlPage;
 import hudson.model.User;
 import hudson.tasks.Mailer;
 import org.hamcrest.Matcher;
@@ -49,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
@@ -80,8 +80,7 @@ public class UserGravatarResolverIntegrationTest {
         j.assertAllImageLoadSuccessfully(goAndWaitForLoadOfPeople());
         j.assertAllImageLoadSuccessfully(wc.goTo("user/user"));
 
-        HtmlElement element = wc.goTo("user/user").getElementById("main-panel").getElementsByTagName("img").get(0);
-        assertThat(element.getAttribute("src"), endsWith("user.png"));
+        assertThat(wc.goTo("user/user").getElementById("main-panel").getElementsByTagName("img"), empty());
     }
 
 	@Test
