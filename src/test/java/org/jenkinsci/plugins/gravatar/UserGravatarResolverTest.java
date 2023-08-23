@@ -28,11 +28,7 @@ import hudson.tasks.Mailer;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,14 +38,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(User.class)
-@PowerMockIgnore({"jdk.xml.internal.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class UserGravatarResolverTest {
 
 	User user;
@@ -62,10 +55,10 @@ public class UserGravatarResolverTest {
 
 	@Before
 	public void setUp() {
-		user = PowerMockito.mock(User.class);
-		mailPropertyOfUser = PowerMockito.mock(Mailer.UserProperty.class);
-		urlCreator = PowerMockito.mock(GravatarUrlCreator.class);
-		resolver = PowerMockito.spy(new UserGravatarResolver());
+		user = Mockito.mock(User.class);
+		mailPropertyOfUser = Mockito.mock(Mailer.UserProperty.class);
+		urlCreator = Mockito.mock(GravatarUrlCreator.class);
+		resolver = Mockito.spy(new UserGravatarResolver());
 
 		when(user.getId()).thenReturn("user");
 		when(user.getProperty(same(Mailer.UserProperty.class))).thenReturn(mailPropertyOfUser);
