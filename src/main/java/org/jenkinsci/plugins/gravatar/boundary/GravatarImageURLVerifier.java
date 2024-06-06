@@ -25,8 +25,12 @@ package org.jenkinsci.plugins.gravatar.boundary;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.logging.Logger;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -43,30 +47,35 @@ public class GravatarImageURLVerifier {
 
 	private static final Logger LOG = Logger.getLogger(GravatarImageURLVerifier.class.getName());
 
-    /**
-     * Verifies if the email has an Gravatar
-     * @param email email address
-     * @return true, if there is a Gravatar for the emails; false, otherwise.
-     */
-    public boolean verify(String email) {
+	/**
+	 * Verifies if the email has an Gravatar
+	 * 
+	 * @param email email address
+	 * @return true, if there is a Gravatar for the emails; false, otherwise.
+	 */
+	public boolean verify(String email) {
 		checkNotNull(email);
 		String imageURL = gravatar().getUrl(email);
 
 		boolean gravatarExistsForEmail = false;
 		try {
-			URL url = new URL(imageURL);
-			HttpURLConnection connection = (HttpURLConnection) ProxyConfiguration.open(url);
-			connection.setConnectTimeout(5 * 1000);
-			connection.setReadTimeout(5 * 1000);
-			connection.setRequestMethod("HEAD");
-			connection.connect();
-			int gravatarResponseCode = connection.getResponseCode();
+			URI url = new URI(imageURL);
+			HttpClient client = ProxyConfiguration.newHttpClientBuilder().followRedirects(HttpClient.Redirect.NORMAL)
+					.connectTimeout(Duration.ofSeconds(5)).build();
+			HttpRequest request = ProxyConfiguration.newHttpRequestBuilder(url).timeout(Duration.ofSeconds(5))
+					.method("HEAD", HttpRequest.BodyPublishers.noBody()).build();
+
+			HttpResponse<?> resp = client.send(request, HttpResponse.BodyHandlers.discarding());
+
+			int gravatarResponseCode = resp.statusCode();
 			gravatarExistsForEmail = responseCodeIsOK(gravatarResponseCode);
-			connection.disconnect();
+
 			LOG.finer("Resolved gravatar for " + email + ". Found: " + gravatarExistsForEmail);
-		} catch (MalformedURLException e) {
+		} catch (URISyntaxException e) {
 			LOG.warning("Gravatar URL is malformed, " + imageURL);
 		} catch (IOException e) {
+			LOG.fine("Could not connect to the Gravatar URL, " + e);
+		} catch (InterruptedException e) {
 			LOG.fine("Could not connect to the Gravatar URL, " + e);
 		}
 		return gravatarExistsForEmail;
@@ -78,7 +87,9 @@ public class GravatarImageURLVerifier {
 	}
 
 	private boolean responseCodeIsOK(int gravatarResponseCode) {
-		return (gravatarResponseCode == HttpURLConnection.HTTP_OK) || (gravatarResponseCode == HttpURLConnection.HTTP_NOT_MODIFIED);
+		System.err.println("gravatarResponseCode: " + gravatarResponseCode);
+		return (gravatarResponseCode == HttpURLConnection.HTTP_OK)
+				|| (gravatarResponseCode == HttpURLConnection.HTTP_NOT_MODIFIED);
 	}
 
 }
