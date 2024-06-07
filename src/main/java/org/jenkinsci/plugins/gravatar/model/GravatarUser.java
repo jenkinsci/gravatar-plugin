@@ -35,7 +35,7 @@ public class GravatarUser {
 	}
 
 	public User user() {
-		return User.get(userId());
+		return User.getById(userId(), false);
 	}
 
 	private String userId() {
