@@ -36,7 +36,7 @@ public class GravatarUserTest {
 		mailProperty = Mockito.mock(Mailer.UserProperty.class);
 		when(mailProperty.getAddress()).thenReturn(EMAIL);
 		mockedUser = Mockito.mockStatic(User.class);
-		mockedUser.when(() -> User.get(eq(USER_ID))).thenReturn(user);
+		mockedUser.when(() -> User.getById(eq(USER_ID), eq(false))).thenReturn(user);
 	}
 
 	@After
