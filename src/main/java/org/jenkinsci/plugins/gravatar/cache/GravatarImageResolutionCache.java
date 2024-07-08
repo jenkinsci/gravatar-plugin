@@ -6,9 +6,9 @@ import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 
 public interface GravatarImageResolutionCache {
 
-	Optional<GravatarUrlCreator> urlCreatorFor(User user);
+    Optional<GravatarUrlCreator> urlCreatorFor(User user);
 
-	boolean hasGravatarCreator(User user);
+    boolean hasGravatarCreator(User user);
 
-	void loadIfUnknown(User user);
+    void loadIfUnknown(User user);
 }

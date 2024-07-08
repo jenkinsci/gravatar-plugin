@@ -5,20 +5,19 @@ import hudson.model.User;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 
 public enum GravatarImageResolutionCacheInstance implements GravatarImageResolutionCache {
-	 INSTANCE;
+    INSTANCE;
 
-	final GravatarImageResolutionLoadingCache cache = new GravatarImageResolutionLoadingCache();
+    final GravatarImageResolutionLoadingCache cache = new GravatarImageResolutionLoadingCache();
 
-	public Optional<GravatarUrlCreator> urlCreatorFor(User user) {
-		return cache.urlCreatorFor(user);
-	}
+    public Optional<GravatarUrlCreator> urlCreatorFor(User user) {
+        return cache.urlCreatorFor(user);
+    }
 
-	public void loadIfUnknown(User user) {
-		cache.loadIfUnknown(user);
-	}
+    public void loadIfUnknown(User user) {
+        cache.loadIfUnknown(user);
+    }
 
-	public boolean hasGravatarCreator(User user) {
-		return cache.hasGravatarCreator(user);
-	}
-
+    public boolean hasGravatarCreator(User user) {
+        return cache.hasGravatarCreator(user);
+    }
 }
