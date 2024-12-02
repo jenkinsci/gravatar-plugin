@@ -67,7 +67,7 @@
 
   <properties>
     <changelist>999999-SNAPSHOT</changelist>
-    <jenkins.baseline>2.440</jenkins.baseline>
+    <jenkins.baseline>2.462</jenkins.baseline>
     <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <gitHubRepo>jenkinsci/gravatar-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
@@ -98,13 +98,23 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>mailer</artifactId>
     </dependency>
+
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- removed in Jenkins v2.452 -->
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>people-view</artifactId>
+      <version>1.2</version>
       <scope>test</scope>
     </dependency>
 
@@ -113,6 +123,7 @@
       <artifactId>hamcrest-core</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
