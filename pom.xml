@@ -110,6 +110,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- removed in Jenkins v2.452 -->
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>people-view</artifactId>
+      <version>1.2</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
@@ -119,14 +127,6 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- removed in Jenkins v2.452 -->
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>people-view</artifactId>
-      <version>1.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
