@@ -2,7 +2,6 @@ package org.jenkinsci.plugins.gravatar.factory;
 
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
-import jenkins.model.Jenkins;
 
 public class GravatarFactory {
 

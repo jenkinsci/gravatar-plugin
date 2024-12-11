@@ -95,7 +95,7 @@ public class UserGravatarResolverIntegrationTest {
                 .getElementById("main-panel")
                 .getElementsByTagName("img")
                 .get(0);
-        assertThat(element.getAttribute("src"), startsWith("http://www.gravatar.com"));
+        assertThat(element.getAttribute("src"), startsWith("https://secure.gravatar.com"));
     }
 
     private void prefetchImage(User user) {
