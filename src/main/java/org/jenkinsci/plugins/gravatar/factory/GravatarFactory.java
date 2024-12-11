@@ -19,11 +19,6 @@ public class GravatarFactory {
     }
 
     private Gravatar gravatar() {
-        return new Gravatar().setHttps(useHttps());
-    }
-
-    private boolean useHttps() {
-        final Jenkins jenkins = Jenkins.getInstanceOrNull();
-        return jenkins != null && jenkins.isRootUrlSecure();
+        return new Gravatar().setHttps(true);
     }
 }
