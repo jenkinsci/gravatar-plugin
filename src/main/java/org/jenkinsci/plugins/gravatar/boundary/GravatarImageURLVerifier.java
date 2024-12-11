@@ -76,9 +76,7 @@ public class GravatarImageURLVerifier {
             LOG.finer("Resolved gravatar for " + email + ". Found: " + gravatarExistsForEmail);
         } catch (URISyntaxException e) {
             LOG.warning("Gravatar URL is malformed, " + imageURL);
-        } catch (IOException e) {
-            LOG.fine("Could not connect to the Gravatar URL, " + e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             LOG.fine("Could not connect to the Gravatar URL, " + e);
         }
         return gravatarExistsForEmail;
@@ -90,8 +88,7 @@ public class GravatarImageURLVerifier {
     }
 
     private boolean responseCodeIsOK(int gravatarResponseCode) {
-        System.err.println("gravatarResponseCode: " + gravatarResponseCode);
-        return (gravatarResponseCode == HttpURLConnection.HTTP_OK)
-                || (gravatarResponseCode == HttpURLConnection.HTTP_NOT_MODIFIED);
+        return gravatarResponseCode == HttpURLConnection.HTTP_OK
+                || gravatarResponseCode == HttpURLConnection.HTTP_NOT_MODIFIED;
     }
 }

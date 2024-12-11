@@ -2,7 +2,6 @@ package org.jenkinsci.plugins.gravatar.factory;
 
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
-import jenkins.model.Jenkins;
 
 public class GravatarFactory {
 
@@ -19,11 +18,6 @@ public class GravatarFactory {
     }
 
     private Gravatar gravatar() {
-        return new Gravatar().setHttps(useHttps());
-    }
-
-    private boolean useHttps() {
-        final Jenkins jenkins = Jenkins.getInstanceOrNull();
-        return jenkins != null && jenkins.isRootUrlSecure();
+        return new Gravatar().setHttps(true);
     }
 }
