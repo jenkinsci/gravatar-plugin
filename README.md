@@ -8,12 +8,17 @@
 This plugins shows [Gravatar](http://gravatar.com/) avatars instead of
 the generic user image.
 
-![](docs/images/people-with-gravatar.png)
+![](docs/images/users.png)
+
+![](docs/images/gravatar.png)
+
+Also on the search pallet
+
+![](docs/images/search.png)
 
 ## Usage
 
-Install the plugin on a Jenkins instance running at least v1.434. Thereafter, it
-will automatically show Gravatars for the users who have an email and a Gravatar. No extra configuration needed except installing the plugin.
+After installation, the plugin will automatically show Gravatars for the users who have an email and a Gravatar. No extra configuration needed except installing the plugin.
 
 ## Caveats
 
