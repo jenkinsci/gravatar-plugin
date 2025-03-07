@@ -25,45 +25,12 @@
     </license>
   </licenses>
 
-  <developers>
-    <developer>
-      <id>redsolo</id>
-      <name>Erik Ramfelt</name>
-      <email>eramfelt@gmail.com</email>
-      <timezone>+1</timezone>
-    </developer>
-    <developer>
-      <id>viceice</id>
-      <name>Michael Kriese</name>
-      <email>michael.kriese@visualon.de</email>
-      <timezone>+1</timezone>
-    </developer>
-  </developers>
-
-  <contributors>
-    <contributor>
-      <name>David M. Carr</name>
-      <email>david@carrclan.us</email>
-      <timezone>-5</timezone>
-    </contributor>
-    <contributor>
-      <name>Simon Gamma</name>
-      <email>github@survive.ch</email>
-      <timezone>+1</timezone>
-    </contributor>
-  </contributors>
-
   <scm>
     <connection>scm:git:https://github.com/${gitHubRepo}.git</connection>
     <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
     <tag>${scmTag}</tag>
     <url>https://github.com/${gitHubRepo}</url>
   </scm>
-
-  <issueManagement>
-    <system>Github</system>
-    <url>https://github.com/${gitHubRepo}/issues</url>
-  </issueManagement>
 
   <properties>
     <changelist>999999-SNAPSHOT</changelist>
