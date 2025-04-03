@@ -3,10 +3,10 @@ package org.jenkinsci.plugins.gravatar.cache;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -21,13 +21,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
 import org.jenkinsci.plugins.gravatar.model.GravatarUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GravatarImageResolutionLoadingCacheTest {
 
     private static final String USER_ID = "userId";
@@ -49,7 +52,7 @@ public class GravatarImageResolutionLoadingCacheTest {
 
     GravatarImageResolutionLoadingCache cache;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(cachedKnownUser.getId()).thenReturn(USER_ID);
         when(cachedUnknownUser.getId()).thenReturn("EFG");
@@ -67,8 +70,8 @@ public class GravatarImageResolutionLoadingCacheTest {
     }
 
     private ImmutableMap<GravatarUser, Optional<GravatarUrlCreator>> mapOfCachedUsers() {
-        GravatarUser cachedGravatarUser = GravatarUser.gravatarUser(cachedKnownUser);
-        GravatarUser cachedUnknownGravatarUser = GravatarUser.gravatarUser(cachedUnknownUser);
+        var cachedGravatarUser = GravatarUser.gravatarUser(cachedKnownUser);
+        var cachedUnknownGravatarUser = GravatarUser.gravatarUser(cachedUnknownUser);
         return ImmutableMap.of(
                 cachedGravatarUser, Optional.of(cachedKnownCreator), cachedUnknownGravatarUser, Optional.absent());
     }

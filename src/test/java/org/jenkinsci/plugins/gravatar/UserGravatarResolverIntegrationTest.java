@@ -27,6 +27,7 @@ import static com.google.common.collect.Sets.newHashSetWithExpectedSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.startsWith;
 
 import hudson.model.User;
@@ -34,33 +35,30 @@ import hudson.tasks.Mailer;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.hamcrest.Matcher;
 import org.htmlunit.html.DomElement;
 import org.htmlunit.html.HtmlAnchor;
-import org.htmlunit.html.HtmlElement;
 import org.htmlunit.html.HtmlPage;
 import org.jenkinsci.plugins.gravatar.cache.GravatarImageResolutionCacheInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 import org.xml.sax.SAXException;
 
+@WithJenkins
 public class UserGravatarResolverIntegrationTest {
 
-    @Rule
-    public JenkinsRule j = new JenkinsRule();
+    private JenkinsRule j = new JenkinsRule();
 
     private JenkinsRule.WebClient wc;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(JenkinsRule j) {
+        this.j = j;
         wc = j.createWebClient();
     }
 
@@ -73,7 +71,7 @@ public class UserGravatarResolverIntegrationTest {
 
     @Test
     public void testNonExistingGravatarUsesDefaultImage() throws Exception {
-        User user = newUser("user");
+        var user = newUser("user");
         user.addProperty(new Mailer.UserProperty("MyEmailAddress@example.com"));
 
         j.assertAllImageLoadSuccessfully(goAndWaitForLoadOfPeople());
@@ -84,17 +82,16 @@ public class UserGravatarResolverIntegrationTest {
 
     @Test
     public void testGravatarIsUsedForUser() throws Exception {
-        User user = newUser("user-e");
+        var user = newUser("user-e");
         user.addProperty(new Mailer.UserProperty("eramfelt@gmail.com"));
         prefetchImage(user);
 
         j.assertAllImageLoadSuccessfully(goAndWaitForLoadOfPeople());
         j.assertAllImageLoadSuccessfully(wc.goTo("user/user-e"));
 
-        HtmlElement element = wc.goTo("user/user-e")
-                .getElementById("main-panel")
-                .getElementsByTagName("img")
-                .get(0);
+        var images = wc.goTo("user/user-e").getElementById("main-panel").getElementsByTagName("img");
+        assertThat(images.getLength(), greaterThan(0));
+        var element = images.get(0);
         assertThat(element.getAttribute("src"), startsWith("https://secure.gravatar.com"));
     }
 
@@ -106,31 +103,31 @@ public class UserGravatarResolverIntegrationTest {
     public void testManyManyUsersWillNotBlockLoadingOfUsersPage() throws Exception {
         final int howMany = 1000;
 
-        Callable<HtmlPage> c = new Callable<HtmlPage>() {
+        var c = new Callable<HtmlPage>() {
             public HtmlPage call() throws Exception {
                 createManyManyUsers(howMany);
                 return goAndWaitForLoadOfPeople();
             }
         };
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<HtmlPage> pageFuture = executorService.submit(c);
-        HtmlPage page = pageFuture.get(60, TimeUnit.SECONDS); // if it takes longer than this we consider it to BLOCK!
+        var executorService = Executors.newSingleThreadExecutor();
+        var pageFuture = executorService.submit(c);
+        var page = pageFuture.get(60, TimeUnit.SECONDS); // if it takes longer than this we consider it to BLOCK!
         j.assertAllImageLoadSuccessfully(page);
         assertThatUserCount(page, equalTo(howMany));
     }
 
     private void assertThatUserCount(HtmlPage page, Matcher<Integer> integerMatcher) {
         List<HtmlAnchor> userLinks = page.getByXPath("//a[contains(@href,'/user/')]");
-        Set<String> targets = newHashSetWithExpectedSize(userLinks.size());
-        for (HtmlAnchor userLink : userLinks) {
+        var targets = newHashSetWithExpectedSize(userLinks.size());
+        for (var userLink : userLinks) {
             targets.add(userLink.getHrefAttribute());
         }
         assertThat(targets.size(), integerMatcher);
     }
 
     private HtmlPage goAndWaitForLoadOfPeople() throws InterruptedException, IOException, SAXException {
-        HtmlPage htmlPage = wc.goTo("asynchPeople");
-        DomElement status = getStatus(htmlPage);
+        var htmlPage = wc.goTo("asynchPeople");
+        var status = getStatus(htmlPage);
         while (status != null && status.isDisplayed()) {
             // the asynch part has not yet finished, so we wait.
             Thread.sleep(500);
@@ -140,11 +137,11 @@ public class UserGravatarResolverIntegrationTest {
     }
 
     private DomElement getStatus(HtmlPage htmlPage) {
-        final DomElement statusById = htmlPage.getElementById("status");
+        final var statusById = htmlPage.getElementById("status");
         if (statusById != null) {
             return statusById;
         }
-        for (DomElement next : htmlPage.getElementsByTagName("table")) {
+        for (var next : htmlPage.getElementsByTagName("table")) {
             if ("progress-bar".equalsIgnoreCase(next.getAttribute("class"))) {
                 return next;
             }
@@ -154,7 +151,7 @@ public class UserGravatarResolverIntegrationTest {
 
     private void createManyManyUsers(int howMany) throws IOException {
         for (int i = 0; i < howMany; i++) {
-            User user = newUser("manymanyuser" + i);
+            var user = newUser("manymanyuser" + i);
             user.addProperty(new Mailer.UserProperty("user" + i + "@gmail.com"));
         }
     }

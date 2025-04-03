@@ -27,22 +27,26 @@ package org.jenkinsci.plugins.gravatar.boundary;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 
 import org.jenkinsci.plugins.gravatar.factory.GravatarFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GravatarImageURLVerifierTest {
 
     @Spy
     private GravatarImageURLVerifier urlVerifier = new GravatarImageURLVerifier();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         doReturn(new GravatarFactory().testGravatar()).when(urlVerifier).gravatar();
     }
@@ -57,8 +61,8 @@ public class GravatarImageURLVerifierTest {
         assertThat(urlVerifier.verify("MyEmailAddressABCDE@example.com"), is(false));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void doesNotAllowNullEMails() {
-        urlVerifier.verify(null);
+        assertThrows(NullPointerException.class, () -> urlVerifier.verify(null));
     }
 }

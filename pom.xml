@@ -40,6 +40,7 @@
     <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <gitHubRepo>jenkinsci/gravatar-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
+    <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <hpi.strictBundledArtifacts>true</hpi.strictBundledArtifacts>
     <hpi.bundledArtifacts>gravatar4java</hpi.bundledArtifacts>
   </properties>
@@ -98,6 +99,12 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
