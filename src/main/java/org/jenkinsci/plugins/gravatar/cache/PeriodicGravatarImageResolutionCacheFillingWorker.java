@@ -51,7 +51,7 @@ public class PeriodicGravatarImageResolutionCacheFillingWorker extends AsyncPeri
 
     @Override
     protected void execute(TaskListener listener) throws IOException, InterruptedException {
-        for (User user : getAllUsers()) {
+        for (var user : getAllUsers()) {
             cache().loadIfUnknown(user);
         }
     }
