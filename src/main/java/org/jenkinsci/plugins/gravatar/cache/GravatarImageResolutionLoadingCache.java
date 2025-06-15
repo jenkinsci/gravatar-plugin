@@ -46,7 +46,7 @@ public class GravatarImageResolutionLoadingCache {
     }
 
     public void loadIfUnknown(User user) {
-        GravatarUser gravatarUser = keyOf(user);
+        var gravatarUser = keyOf(user);
         if (!isKnown(gravatarUser)) {
             try {
                 cache.get(gravatarUser);
