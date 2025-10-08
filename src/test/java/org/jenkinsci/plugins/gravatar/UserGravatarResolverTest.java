@@ -39,8 +39,8 @@ import static org.mockito.Mockito.when;
 import hudson.model.User;
 import hudson.tasks.Mailer;
 import org.jenkinsci.plugins.gravatar.model.GravatarUrlCreator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class UserGravatarResolverTest {
@@ -53,7 +53,7 @@ public class UserGravatarResolverTest {
 
     UserGravatarResolver resolver;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         user = Mockito.mock(User.class);
         mailPropertyOfUser = Mockito.mock(Mailer.UserProperty.class);
