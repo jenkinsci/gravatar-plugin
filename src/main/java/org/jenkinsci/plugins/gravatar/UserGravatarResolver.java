@@ -44,7 +44,7 @@ public class UserGravatarResolver extends UserAvatarResolver {
     public String findAvatarFor(User user, int width, int height) {
         if (isGravatarUser(user)) {
             LOG.finest("Resolving gravatar url for user " + user.getId() + " in size " + width + "x" + height);
-            GravatarUrlCreator urlCreator = urlCreatorFor(user);
+            var urlCreator = urlCreatorFor(user);
             return urlCreator.buildUrlForSize(width);
         }
         return null; // we cannot contribute to the avatar resolution for this user

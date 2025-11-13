@@ -16,7 +16,7 @@ public class GravatarUser {
 
     private final Supplier<Optional<String>> mailSupplier = Suppliers.memoize(new Supplier<Optional<String>>() {
         public Optional<String> get() {
-            Mailer.UserProperty mailProperty = user().getProperty(Mailer.UserProperty.class);
+            var mailProperty = user().getProperty(Mailer.UserProperty.class);
             if (mailProperty == null) {
                 return Optional.absent();
             }
@@ -66,7 +66,7 @@ public class GravatarUser {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final GravatarUser other = (GravatarUser) obj;
+        final var other = (GravatarUser) obj;
         return Objects.equal(this.userId, other.userId);
     }
 }
