@@ -37,12 +37,15 @@
     <revision>211</revision>
     <changelist>999999-SNAPSHOT</changelist>
     <jenkins.baseline>2.516</jenkins.baseline>
-    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
+    <!-- TODO https://github.com/jenkinsci/jenkins/pull/11269 -->
+    <jenkins.version>2.537-rc37714.d5718019b_8ff</jenkins.version>
     <gitHubRepo>jenkinsci/gravatar-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <hpi.strictBundledArtifacts>true</hpi.strictBundledArtifacts>
     <hpi.bundledArtifacts>gravatar4java</hpi.bundledArtifacts>
+    <!-- AvatarContributor in GravatarFactory; SuppressRestrictedWarnings doesn't work -->
+    <useBeta>true</useBeta>
   </properties>
 
   <dependencyManagement>
