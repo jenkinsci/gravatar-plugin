@@ -5,6 +5,7 @@ import de.bripkens.gravatar.Gravatar;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
 import jenkins.security.csp.AvatarContributor;
+import org.kohsuke.accmod.restrictions.suppressions.SuppressRestrictedWarnings;
 
 public class GravatarFactory {
 
@@ -28,6 +29,7 @@ public class GravatarFactory {
      * Allow loading images from Gravatar HTTPS URLs in Content Security Policy.
      */
     @Initializer(after = InitMilestone.SYSTEM_CONFIG_ADAPTED)
+    @SuppressRestrictedWarnings(AvatarContributor.class)
     public static void allowGravatarDomainForCSP() {
         AvatarContributor.allow(Gravatar.HTTPS_URL);
     }

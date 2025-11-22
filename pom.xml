@@ -44,8 +44,6 @@
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     <hpi.strictBundledArtifacts>true</hpi.strictBundledArtifacts>
     <hpi.bundledArtifacts>gravatar4java</hpi.bundledArtifacts>
-    <!-- AvatarContributor in GravatarFactory; SuppressRestrictedWarnings doesn't work -->
-    <useBeta>true</useBeta>
   </properties>
 
   <dependencyManagement>
@@ -77,6 +75,13 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>mailer</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>access-modifier-suppressions</artifactId>
+      <version>1.35</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
