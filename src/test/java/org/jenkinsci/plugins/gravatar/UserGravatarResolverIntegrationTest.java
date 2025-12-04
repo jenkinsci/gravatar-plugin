@@ -77,7 +77,10 @@ public class UserGravatarResolverIntegrationTest {
         j.assertAllImageLoadSuccessfully(goAndWaitForLoadOfPeople());
         j.assertAllImageLoadSuccessfully(wc.goTo("user/user"));
 
-        assertThat(wc.goTo("user/user").getElementById("main-panel").getElementsByTagName("img"), empty());
+        assertThat(
+                ((DomElement) wc.goTo("user/user").querySelector(".jenkins-app-bar--with-icon"))
+                        .getElementsByTagName("img"),
+                empty());
     }
 
     @Test
@@ -89,7 +92,8 @@ public class UserGravatarResolverIntegrationTest {
         j.assertAllImageLoadSuccessfully(goAndWaitForLoadOfPeople());
         j.assertAllImageLoadSuccessfully(wc.goTo("user/user-e"));
 
-        var images = wc.goTo("user/user-e").getElementById("main-panel").getElementsByTagName("img");
+        var images = ((DomElement) wc.goTo("user/user-e").querySelector(".jenkins-app-bar--with-icon"))
+                .getElementsByTagName("img");
         assertThat(images.getLength(), greaterThan(0));
         var element = images.get(0);
         assertThat(element.getAttribute("src"), startsWith("https://secure.gravatar.com"));
