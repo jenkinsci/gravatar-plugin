@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>5.28</version>
+    <version>5.2098.v4d48a_c4c68e7</version>
     <relativePath />
   </parent>
 
@@ -34,7 +34,7 @@
 
   <properties>
     <!-- Bump when baseline was bumped -->
-    <revision>213</revision>
+    <revision>214</revision>
     <changelist>999999-SNAPSHOT</changelist>
     <jenkins.baseline>2.528</jenkins.baseline>
     <jenkins.version>2.539</jenkins.version>
