@@ -34,10 +34,10 @@
 
   <properties>
     <!-- Bump when baseline was bumped -->
-    <revision>213</revision>
+    <revision>214</revision>
     <changelist>999999-SNAPSHOT</changelist>
-    <jenkins.baseline>2.528</jenkins.baseline>
-    <jenkins.version>2.539</jenkins.version>
+    <jenkins.baseline>2.541</jenkins.baseline>
+    <jenkins.version>${jenkins.baseline}.1</jenkins.version>
     <gitHubRepo>jenkinsci/gravatar-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
     <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
