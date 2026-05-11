@@ -1,7 +1,9 @@
 # Gravatar Plugin
 
+[![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins%2Fgravatar-plugin%2Fmain)](https://ci.jenkins.io/job/Plugins/job/gravatar-plugin/job/main)
+[![Coverage](https://ci.jenkins.io/buildStatus/icon?job=Plugins%2Fgravatar-plugin%2Fmain&subject=coverage&status=%24%7BinstructionCoverage%7D&color=%24%7BcolorInstructionCoverage%7D)](https://ci.jenkins.io/job/Plugins/job/gravatar-plugin/job/main/coverage)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/gravatar)](https://plugins.jenkins.io/gravatar)
-[![Changelog](https://img.shields.io/github/v/tag/jenkinsci/gravatar-plugin?label=changelog)](https://github.com/jenkinsci/gravatar-plugin/blob/master/CHANGELOG.md)
+[![Changelog](https://img.shields.io/github/v/tag/jenkinsci/gravatar-plugin?label=changelog)](https://github.com/jenkinsci/gravatar-plugin/releases/latest)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/gravatar?color=blue)](https://plugins.jenkins.io/gravatar)
 [![GitHub contributors](https://img.shields.io/github/contributors/jenkinsci/gravatar-plugin?color=blue)](https://github.com/jenkinsci/gravatar-plugin/graphs/contributors)
 
